@@ -10,8 +10,9 @@ module.exports = function (env, argv) {
         entry:  "./src/index.tsx",
         output: {
             path: path.join(__dirname, '/dist'),
-            filename: '[name][contenthash:8].js',
-            publicPath: (isDevelopment ? "/" : "../")
+            filename: './src/[name][contenthash:8].js',
+            publicPath: (isDevelopment ? "/" : "./"),
+            clean: true,
         },
         devServer: {
             port: 9000,
@@ -25,18 +26,12 @@ module.exports = function (env, argv) {
                 {
                     test: /\.(js|jsx)$/,
                     exclude: /node_modules/,
-                    use: {
-                        loader: "babel-loader"
-                    }
+                    loader: "babel-loader",
                 },
                 {
                     test: /\.(ts|tsx)$/,
                     exclude: /node_modules/,
-                    use: [
-                        {
-                            loader: "ts-loader"
-                        }
-                    ]
+                    loader: "ts-loader",
                 },
                 {
                     test: /\.scss$/,
@@ -50,8 +45,8 @@ module.exports = function (env, argv) {
                     test: /\.(png|jpg|jpeg|gif)/,
                     loader: "file-loader",
                     options: {
-                        outputPath: "./assets/img",
-                        publicPath: "../assets/img"
+                        outputPath: "./src/assets/img",
+                        publicPath: "./src/assets/img"
                     }
                 },
                 {
@@ -64,11 +59,11 @@ module.exports = function (env, argv) {
         },
         plugins: [
             new MiniCssExtractPlugin({
-                filename: "assets/css/[name][contenthash:8].css"
+                filename: "./src/assets/css/[name][contenthash:8].css"
             }),
             new HtmlWebpackPlugin({
                 template: './public/index.html',
-                filename: (isDevelopment ? "index.html" : "./public/index.html")
+                filename: (isDevelopment ? "index.html" : "./index.html")
             })
         ]
     };
